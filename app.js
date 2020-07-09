@@ -52,6 +52,9 @@ app.post("/", function (req, res) {
   //end the write request
   request.end();
 });
+app.post("/failure", function (req,res) {
+  res.redirect("/");
+});
 
 app.listen(3000, function () {
   console.log("serving at 3000");
