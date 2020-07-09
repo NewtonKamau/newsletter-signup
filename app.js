@@ -35,7 +35,7 @@ app.post("/", function (req, res) {
   //options to help with authentication
   const options = {
     method: "POST",
-    auth: "Newton:474270166f07fdf0d06106bb6aa77abf-us10",
+    auth: "{}",
   };
   const request = https.request(url, options, function (response) {
     if (response.statusCode === 200) {
