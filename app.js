@@ -12,12 +12,28 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/signup.html");
 });
 app.post("/", function (req, res) {
-  var firstName = req.body.firstname;
-  var lastName = req.body.lastname;
-  var email = req.body.email;
-  console.log(firstName + lastName + email);
+  const firstName = req.body.firstname;
+  const lastName = req.body.lastname;
+  const email = req.body.email;
+  //data object to be passed to mailchip
+  var data = {
+    members: [
+      {
+        email_address: email,
+        status: "subscribed",
+        merge_fields: {
+          FNAME: firstName,
+          LNAME: lastName,
+        },
+      },
+    ],
+  };
+  //convert that data to json string
+  var jsonData = JSON.stringify(data);
 });
 
 app.listen(3000, function () {
   console.log("serving at 3000");
 });
+
+
