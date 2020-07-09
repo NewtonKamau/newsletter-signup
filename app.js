@@ -2,7 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
-const { response } = require("express");
+const https = require("https");
 const app = express();
 
 app.use(express.static("public"));
@@ -30,10 +30,27 @@ app.post("/", function (req, res) {
   };
   //convert that data to json string
   var jsonData = JSON.stringify(data);
+  //url to mailchip to make the requests
+  const url = "https://us10.api.mailchimp.com/3.0/lists/97dd09c7d9";
+  //options to help with authentication
+  const options = {
+    method: "POST",
+    auth: "Newton:474270166f07fdf0d06106bb6aa77abf-us10",
+  };
+  const request = https.request(url, options, function (response) {
+    response.on("data", function (data) {
+      console.log(JSON.parse(data));
+    });
+  });
+  //send data to mailchip using write()
+  request.write(jsonData);
+  //end the write request
+  request.end();
 });
 
 app.listen(3000, function () {
   console.log("serving at 3000");
 });
 
-
+//api key
+//
